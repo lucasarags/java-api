@@ -69,5 +69,5 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-        docker build . -t kevinalef/java-api:latest
-        docker push kevinalef/java-api:latest
+        docker build . -f imagem-ubuntu-e-isso-mesmo -t $DOCKER_USER/java-api:latest
+        docker push $DOCKER_USER/java-api:latest
