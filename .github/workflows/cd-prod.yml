@@ -62,3 +62,8 @@ jobs:
         ssh azure 'sudo rm -rf /api/java-api.jar'
         scp target/java-api.jar azure:/api/java-api.jar
         ssh azure 'sudo systemctl start java-api'
+        
+    - name: Deploy Docker
+      run: |
+        docker build . kevinalef/java-api:latest
+        docker push kevinalef/java-api:tagname
