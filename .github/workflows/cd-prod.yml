@@ -65,5 +65,5 @@ jobs:
         
     - name: Deploy Docker
       run: |
-        docker build . kevinalef/java-api:latest
+        docker build . -t kevinalef/java-api:latest
         docker push kevinalef/java-api:tagname
