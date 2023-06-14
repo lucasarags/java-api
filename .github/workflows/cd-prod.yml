@@ -23,18 +23,18 @@ jobs:
     - name: Run Tests With Jacoco Coverage
       run: mvn -B -f pom.xml test jacoco:prepare-agent jacoco:report
     
-    #- name: SonarCloud Analyze
-    #  env:
-    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #  run: |
-    #    mvn -B verify sonar:sonar \
-    #    -Dsonar.host.url=https://sonarcloud.io \
-    #    -Dsonar.organization=kelvin-alef \
-    #    -Dsonar.projectKey=kelvin-alef_java-api \
-    #    -Dsonar.language=java \
-    #    -Dsonar.java.coveragePlugin=jacoco \
-    #    -Dmaven.test.skip=true
+    - name: SonarCloud Analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        mvn -B verify sonar:sonar \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.organization=kelvin-alef \
+        -Dsonar.projectKey=kelvin-alef_java-api \
+        -Dsonar.language=java \
+        -Dsonar.java.coveragePlugin=jacoco \
+        -Dmaven.test.skip=true
         
     - name: Build The Application
       run: mvn -B -f pom.xml clean install -Dmaven.test.skip=true
@@ -56,18 +56,9 @@ jobs:
         SSH_HOST: ${{ secrets.SSH_HOST_PROD }}
         SSH_KEY: ${{ secrets.SSH_KEY_PROD }}
     
-    #- name: Deploy The Application
-    #  run: |
-    #    ssh azure 'sudo systemctl stop java-api'
-    #    ssh azure 'sudo rm -rf /api/java-api.jar'
-    #    scp target/java-api.jar azure:/api/java-api.jar
-    #    ssh azure 'sudo systemctl start java-api'
-        
-    - name: Deploy Docker
-      env:
-        DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Deploy The Application
       run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-        docker build . -f imagem-ubuntu-e-isso-mesmo -t $DOCKER_USER/java-api:latest
-        docker push $DOCKER_USER/java-api:latest
+        ssh azure 'sudo systemctl stop java-api'
+        ssh azure 'sudo rm -rf /api/java-api.jar'
+        scp target/java-api.jar azure:/api/java-api.jar
+        ssh azure 'sudo systemctl start java-api'
