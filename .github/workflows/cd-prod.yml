@@ -60,5 +60,5 @@ jobs:
       run: |
         ssh google-cloud 'sudo systemctl stop java-api'
         ssh google-cloud 'sudo rm -rf /api/java-api.jar'
-        scp target/java-api.jar google-cloud:/home/lucas_arags/api/java-api.jar
+        scp target/java-api.jar google-cloud:/api/java-api.jar
         ssh google-cloud 'sudo systemctl start java-api'
