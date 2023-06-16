@@ -30,8 +30,8 @@ jobs:
       run: |
         mvn -B verify sonar:sonar \
         -Dsonar.host.url=https://sonarcloud.io \
-        -Dsonar.organization=kelvin-alef \
-        -Dsonar.projectKey=kelvin-alef_java-api \
+        -Dsonar.organization=lucasarags \
+        -Dsonar.projectKey=lucasarags_java-api \
         -Dsonar.language=java \
         -Dsonar.java.coveragePlugin=jacoco \
         -Dmaven.test.skip=true
