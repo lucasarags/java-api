@@ -1,4 +1,4 @@
-name: Java CD with Maven - Prod
+name: Java CD with Maven - Prod 
 
 on:
   push:
