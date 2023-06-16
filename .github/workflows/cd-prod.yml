@@ -39,16 +39,16 @@ jobs:
     - name: Build The Application
       run: mvn -B -f pom.xml clean install -Dmaven.test.skip=true
     
-    - name: Configure SSH Azure
+    - name: Configure SSH Google Cloud
       run: |
         mkdir -p ~/.ssh/
-        echo "$SSH_KEY" > ~/.ssh/azure.key
-        chmod 600 ~/.ssh/azure.key
+        echo "$SSH_KEY" > ~/.ssh/google-cloud.key
+        chmod 600 ~/.ssh/google-cloud.key
         cat >>~/.ssh/config <<END
-        Host azure
+        Host google-cloud
           HostName $SSH_HOST
           User $SSH_USER
-          IdentityFile ~/.ssh/azure.key
+          IdentityFile ~/.ssh/google-cloud.key
           StrictHostKeyChecking no
         END
       env:
