@@ -63,7 +63,11 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         docker build . -t lucasaragao/java-api:latest 
-        docker push lucasaragao/java-api:latest 
+        docker push lucasaragao/java-api:latest
+        
+    - name: Remove Old Images
+      run: |
+        ssh google-cloud 'sudo docker rmi $(sudo docker images -f "dangling=true" -q) || true'
         
     - name: Remove Old Containers
       run: |
