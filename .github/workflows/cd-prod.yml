@@ -67,12 +67,12 @@ jobs:
         
     - name: Remove Old Containers
       run: |
-        docker stop java-api-container || true
-        docker rm java-api-container || true
+        ssh google-cloud 'sudo docker stop java-api-container || true'
+        ssh google-cloud 'sudo docker rm java-api-container || true'
 
     - name: Pull and Run Docker Container
       run: |
-        docker pull lucasaragao/java-api:latest
-        docker run -d -p 8080:8080 --name java-api-container lucasaragao/java-api:latest
+         ssh google-cloud 'sudo docker pull lucasaragao/java-api:latest'
+         ssh google-cloud 'sudo docker run -d -p 8080:8080 --name java-api-container lucasaragao/java-api:latest'
 
 
