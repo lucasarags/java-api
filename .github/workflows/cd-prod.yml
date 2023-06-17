@@ -56,9 +56,12 @@ jobs:
         SSH_HOST: ${{ secrets.SSH_HOST_PROD }}
         SSH_KEY: ${{ secrets.SSH_KEY_PROD }}
     
-    - name: Deploy The Application
+    - name: Deploy Docker
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
-        ssh google-cloud 'sudo systemctl stop java-api'
-        ssh google-cloud 'sudo rm -rf /api/java-api.jar'
-        scp target/java-api.jar google-cloud:/api/java-api.jar
-        ssh google-cloud 'sudo systemctl start java-api'
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        docker build . -t lucasaragao/java-api:latest 
+        docker push lucasaragao/java-api:latest 
+
