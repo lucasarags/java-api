@@ -64,4 +64,15 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         docker build . -t lucasaragao/java-api:latest 
         docker push lucasaragao/java-api:latest 
+        
+    - name: Remove Old Containers
+      run: |
+        docker stop java-api-container || true
+        docker rm java-api-container || true
+
+    - name: Pull and Run Docker Container
+      run: |
+        docker pull lucasaragao/java-api:latest
+        docker run -d -p 8080:8080 --name java-api-container lucasaragao/java-api:latest
+
 
