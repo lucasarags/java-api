@@ -58,7 +58,6 @@ jobs:
     
     - name: Deploy The Application
       run: |
-        ssh google-cloud 'sudo chmod 755 /api'
         ssh google-cloud 'sudo systemctl stop java-api'
         ssh google-cloud 'sudo rm -rf /api/java-api.jar'
         scp target/java-api.jar google-cloud:/api/java-api.jar
