@@ -65,10 +65,6 @@ jobs:
         docker build . -t lucasaragao/java-api:latest 
         docker push lucasaragao/java-api:latest
         
-    - name: Remove Old Images
-      run: |
-        ssh google-cloud 'sudo docker rmi $(sudo docker images -f "dangling=true" -q) || true'
-        
     - name: Remove Old Containers
       run: |
         ssh google-cloud 'sudo docker stop java-api-container || true'
@@ -78,5 +74,9 @@ jobs:
       run: |
          ssh google-cloud 'sudo docker pull lucasaragao/java-api:latest'
          ssh google-cloud 'sudo docker run -d -p 8080:8080 --name java-api-container lucasaragao/java-api:latest'
+         
+    - name: Remove Old Images
+      run: |
+        ssh google-cloud 'sudo docker rmi $(sudo docker images -f "dangling=true" -q) || true'
 
 
